@@ -1,0 +1,37 @@
+import matplotlib.pyplot as plt
+import streamlit as st
+import pandas as pd
+
+st.title("⚽ Premier League Dashboard - 2010/11 - 2019/20")
+DATA_URL = 'https://raw.githubusercontent.com/tketse/premier-league-datasets/refs/heads/main/epldat10seasons/epl-allseasons-matchstats.csv'
+
+
+@st.cache_data
+def load_data():
+    return pd.read_csv(DATA_URL)
+
+
+df = load_data()
+
+st.write("Quick look at the data:")
+st.dataframe(df.head())
+
+seasons = df['Season'].unique()
+selected_season = st.selectbox("Select a Season", seasons)
+filtered_df = df[df['Season'] == selected_season]
+
+filtered_df['TotalGoals'] = filtered_df['HomeGoals'] + filtered_df['AwayGoals']
+
+# Visualization 1: Distribution of total goals per match
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.hist(filtered_df['TotalGoals'], bins=range(0, 11), color="orange", edgecolor="black")
+ax.set_title("Distribution of Total Goals per Match", fontsize=16)
+ax.set_xlabel("Total Goals per Match")
+ax.set_ylabel("Number of Matches")
+ax.set_xticks(range(0, 11))
+st.pyplot(fig)
+
+# Visualization 2: Match results breakdown
+# def get_result(row):
+#     if row['HomeGoals'] > row['AwayGoals']:
+
