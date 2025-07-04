@@ -32,6 +32,14 @@ ax.set_xticks(range(0, 11))
 st.pyplot(fig)
 
 # Visualization 2: Match results breakdown
-# def get_result(row):
-#     if row['HomeGoals'] > row['AwayGoals']:
+results_count = filtered_df['FullTime'].value_counts()
+
+st.subheader("Match Results Breakdown")
+
+fig2, ax2 = plt.subplots()
+ax2.pie(results_count, labels=results_count.index, autopct='%1.1f%%')
+ax2.set_title("win/Draw Percentages")
+st.pyplot(fig2)
+
+
 
