@@ -41,5 +41,15 @@ ax2.pie(results_count, labels=results_count.index, autopct='%1.1f%%')
 ax2.set_title("win/Draw Percentages")
 st.pyplot(fig2)
 
+# Visualization 3: Teams with most home goals
+home_goals = filtered_df.groupby('HomeTeam')['HomeGoals'].sum().sort_values(ascending=False).head(10)
+
+st.subheader("Top 10 Teams with Most Home Goals")
+
+fig3, ax3 = plt.subplots()
+ax3.barh(home_goals.index, home_goals.values, color="blue")
+ax3.set_xlabel("Total Home Goals")
+ax3.invert_yaxis()
+st.pyplot(fig3)
 
 
